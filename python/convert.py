@@ -10,12 +10,10 @@ def relabel(fileName,newfileName):
     inFile=open(fileName,'r')
     outFile=open(newfileName,'w')
     x_lines=inFile.readlines()
-    #x_distribute=[0]*20
     id=0
-    before_lable=x_lines.strip()[0].split('/')[0]
+    before_lable=x_lines[0].split('/')[0]
     for x_line in x_lines:
     	x_0=x_line.split()[0]
-        #x_1=x_line.split()[1]
         current_lable=x_0.split('/')[0]
         if current_lable!=before_lable:
         	id=id+1
@@ -38,16 +36,16 @@ def GetFileList(dir_name,fileList):
 
 def generate_imagelist_from_dir(dir_name,output_filename):
     filelist=GetFileList(dir_name,[])
-    outputfile=open(output_filename,'w')
+    outputfile=open('all_imagelist_tmp.txt','w')
     i=0
     for e in filelist:
         line=e.encode('utf-8').split('/')[-3]+'/'+e.encode('utf-8').split('/')[-2]+'/'+e.encode('utf-8').split('/')[-1]+' '+'0'+'\n'
         outputfile.writelines(line)
         print 'generating iter:',i
         i=i+1
-    #relabel('all_imagelist_tmp.txt',output_filename)
-    #os.remove('all_imagelist_tmp.txt')
-    print 'Generate done\nSave in ',output_filename,'\n Relabel,please use relabel.py'
+    relabel('all_imagelist_tmp.txt',output_filename)
+    os.remove('all_imagelist_tmp.txt')
+    print 'Generate done\nSave in ',output_filename
 
  
 def check_overlap():
